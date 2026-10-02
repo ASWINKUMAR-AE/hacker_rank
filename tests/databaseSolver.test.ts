@@ -43,6 +43,22 @@ describe('DatabaseSolver & Relational Algebra resolution', () => {
     expect(res).toBe('42');
   });
 
+  it('should solve Basics of Sets and Relations #4 (Cartesian Product)', () => {
+    const res = solver.findHighConfidenceSolution(
+      'basics-of-sets-and-relational-algebra-4',
+      'Set A = {1,2,3,4,5,6}, Set B = {2,3,4,5,6,7,8}. What is the total number of ordered pairs present in the Cartesian Product ?'
+    );
+    expect(res).toBe('42');
+  });
+
+  it('should solve Relations - 2 MCQ (Cartesian Product from tuples definition)', () => {
+    const res = solver.findHighConfidenceSolution(
+      'relations-2',
+      'The result which operation contains all pairs of tuples from the two relations, regardless of whether their attribute values match.'
+    );
+    expect(res).toBe('Cartesian product');
+  });
+
   it('should analyze and solve Databases challenge end-to-end via ChallengeAnalyzer', async () => {
     const problem = {
       title: 'Basics of Sets and Relations #1',

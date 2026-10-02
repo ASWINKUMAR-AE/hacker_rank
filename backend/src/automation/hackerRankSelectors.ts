@@ -222,11 +222,16 @@ export const defaultSelectors: HackerRankSelectorConfig = {
     primary: [
       'button[data-automation="submit-code-button"]',
       'button.hr-monaco-submit',
-      'button:has-text("Submit Code")'
+      'button:has-text("Submit Code")',
+      'button:has-text("Submit Answer")',
+      'button:has-text("Submit")'
     ],
     fallbacks: [
       'button[data-analytics="SubmitCode"]',
-      'button:has-text("Submit")'
+      'button[data-analytics="SubmitAnswer"]',
+      'button.btn-primary:has-text("Submit")',
+      '.ui-btn-primary:has-text("Submit")',
+      'button:has-text("Confirm")'
     ]
   },
   testResults: {
