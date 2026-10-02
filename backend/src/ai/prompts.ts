@@ -67,6 +67,20 @@ SPECIFIC LINUX SHELL RULES:
 - Handle trailing newlines and multi-line inputs properly.
 - Ensure commands are safe and read from standard input ($stdin) or files as specified.`;
 
+    case 'Databases':
+      return `${baseRules}
+
+SPECIFIC DATABASES & RELATIONAL ALGEBRA RULES:
+- For Sets and Relations: Calculate set cardinality strictly based on the sets provided in the statement:
+  * Cartesian Product |A × B|: Total ordered pairs = |A| * |B|. (e.g., if |A|=6 and |B|=7, answer is 42).
+  * Union |A ∪ B|: Count of unique elements in A and B combined.
+  * Intersection |A ∩ B|: Count of elements present in both A and B.
+  * Difference |A - B|: Count of elements in A that are not in B.
+  * Total binary relations on set of size n: 2^(n * n).
+  * Symmetric relations on set of size n: 2^(n*(n+1)/2).
+- For Normalization: Identify the highest normal form satisfied (1NF, 2NF, 3NF, BCNF).
+- For Plain Text questions: The generated_solution MUST be ONLY the exact answer string or integer (e.g. "42" or "8" or "1NF") with NO surrounding markdown, explanation, or whitespace.`;
+
     case 'Algorithms':
     case 'JavaScript':
     default:
