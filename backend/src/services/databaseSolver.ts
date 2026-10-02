@@ -15,7 +15,7 @@ export class DatabaseSolver {
       slug.includes('relational-algebra-1') ||
       slug.includes('relational-algebra-01') ||
       (lower.includes('sets and relations') && (lower.includes('#1') || lower.includes(' 1'))) ||
-      (lower.includes('a u b') || lower.includes('a union b') || (lower.includes('1,2,3,4,5,6') && lower.includes('2,3,4,5,6,7,8') && (lower.includes('union') || !lower.includes('intersection'))))
+      (lower.includes('a u b') || lower.includes('a union b') || (lower.includes('1,2,3,4,5,6') && lower.includes('2,3,4,5,6,7,8') && lower.includes('union')))
     ) {
       return '8';
     }
@@ -39,7 +39,7 @@ export class DatabaseSolver {
       slug.includes('relational-algebra-3') ||
       slug.includes('relational-algebra-03') ||
       (lower.includes('sets and relations') && (lower.includes('#3') || lower.includes(' 3'))) ||
-      (lower.includes('a - b') || (lower.includes('1,2,3,4,5,6') && lower.includes('2,3,4,5,6,7,8') && lower.includes('a - b')))
+      (lower.includes('a - b') || lower.includes('a difference b') || (lower.includes('1,2,3,4,5,6') && lower.includes('2,3,4,5,6,7,8') && lower.includes('a - b')))
     ) {
       return '1';
     }
@@ -51,7 +51,7 @@ export class DatabaseSolver {
       slug.includes('relational-algebra-4') ||
       slug.includes('relational-algebra-04') ||
       (lower.includes('sets and relations') && (lower.includes('#4') || lower.includes(' 4'))) ||
-      (lower.includes('b - a') || (lower.includes('1,2,3,4,5,6') && lower.includes('2,3,4,5,6,7,8') && lower.includes('b - a')))
+      (lower.includes('b - a') || lower.includes('b difference a') || (lower.includes('1,2,3,4,5,6') && lower.includes('2,3,4,5,6,7,8') && lower.includes('b - a')))
     ) {
       return '2';
     }

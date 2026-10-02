@@ -238,11 +238,13 @@ export class PlaywrightHackerRankRunner {
       ? rawConstraints.split('\n').map(c => c.trim()).filter(c => c.length > 0)
       : [];
 
-    const defaultLang = (url.includes('react') || url.includes('javascript'))
-      ? 'JavaScript'
-      : (url.includes('shell') || url.includes('bash'))
-        ? 'Bash'
-        : 'MySQL';
+    const defaultLang = (url.includes('database') || url.includes('relational-algebra'))
+      ? 'Plain Text'
+      : (url.includes('react') || url.includes('javascript'))
+        ? 'JavaScript'
+        : (url.includes('shell') || url.includes('bash'))
+          ? 'Bash'
+          : 'MySQL';
 
     return {
       title: title || 'HackerRank Practice Challenge',

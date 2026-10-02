@@ -280,57 +280,64 @@ export class HackerRankAutoRunner {
       await this.runner.insertCodeIntoEditor(result.generated_solution, animatedTyping);
       await new Promise(r => setTimeout(r, 2000));
 
-      // Trigger Run Code test
-      console.log('🧪 Clicking "Run Code" to test against public Sample Cases...');
-      await this.runner.runCodeTest();
+      const hasSampleCases = problem.examples && problem.examples.length > 0;
+      let testScore = { passed: false, score: 0, maxScore: 0, details: '' };
 
-      // Wait and evaluate test score
-      const testScore = await this.runner.waitForTestResult(25000);
+      if (hasSampleCases) {
+        // Trigger Run Code test for public Sample Cases
+        console.log('🧪 Clicking "Run Code" to test against public Sample Cases...');
+        await this.runner.runCodeTest();
+        testScore = await this.runner.waitForTestResult(25000);
 
-      // Display the Score on the Log
-      console.log('\n======================================================');
-      console.log(`📊 [TEST RESULT & SCORE LOG] Challenge: ${slug}`);
-      console.log(`🏆 SCORE: ${testScore.score} / ${testScore.maxScore} points`);
-      console.log(`📋 Details: ${testScore.details}`);
-      if (testScore.passedCount !== undefined && testScore.totalCount !== undefined) {
-        console.log(`🧪 Test Cases Passed: ${testScore.passedCount} / ${testScore.totalCount}`);
+        console.log('\n======================================================');
+        console.log(`📊 [TEST RESULT & SCORE LOG] Challenge: ${slug}`);
+        console.log(`🏆 SCORE: ${testScore.score} / ${testScore.maxScore} points`);
+        console.log(`📋 Details: ${testScore.details}`);
+        if (testScore.passedCount !== undefined && testScore.totalCount !== undefined) {
+          console.log(`🧪 Test Cases Passed: ${testScore.passedCount} / ${testScore.totalCount}`);
+        }
+        if (testScore.error) {
+          console.log(`⚠️ Failure Details: ${testScore.error}`);
+        }
+        console.log('======================================================\n');
+      } else {
+        console.log('ℹ️ No public sample test cases for this challenge. Submitting directly for grading...');
       }
-      if (testScore.error) {
-        console.log(`⚠️ Failure Details: ${testScore.error}`);
-      }
-      console.log('======================================================\n');
 
-      if (testScore.score > 0 || testScore.passed) {
-        pointsScored = true;
-        console.log(`🎉 [PASSED SAMPLE CASES] Solution passed sample tests with ${testScore.score} points!`);
-
+      if (testScore.score > 0 || testScore.passed || !hasSampleCases) {
         // [STEP 6: SUBMIT CODE]
         console.log('\n[STEP 6/6: SUBMIT CODE AGAINST HIDDEN TEST CASES]');
-        if (autoSubmit) {
-          console.log('🚀 Clicking "Submit Code" to run against all locked/hidden test cases...');
+        if (autoSubmit || !hasSampleCases) {
+          console.log('🚀 Clicking "Submit Code" to run against all test cases...');
           const submitScore = await this.runner.submitCode(35000);
           console.log(`📊 [SUBMISSION RESULT] Score: ${submitScore.score} / ${submitScore.maxScore} points (${submitScore.details})`);
           
+          if (submitScore.score > 0 || submitScore.passed) {
+            pointsScored = true;
+          }
           // Wait briefly for congratulation banner / modal to render
           await this.page.waitForTimeout(2500);
         } else {
+          pointsScored = true;
           console.log('✓ Code tested successfully with points.');
         }
 
-        // Mark as completed so we NEVER repeat
-        this.markCompleted(slug, problem.title);
-        console.log(`✅ [MARKED COMPLETED] Saved '${slug}' to completed challenges store (Score: ${testScore.score} pts).`);
+        if (pointsScored) {
+          // Mark as completed so we NEVER repeat
+          this.markCompleted(slug, problem.title);
+          console.log(`✅ [MARKED COMPLETED] Saved '${slug}' to completed challenges store.`);
 
-        // Check if there is an on-page or modal "Next Challenge" button and click it
-        console.log('🔍 Checking for "Next Challenge" button / modal...');
-        const nextResult = await this.runner.clickNextChallenge();
-        if (nextResult.clicked) {
-          console.log(`🚀 Clicked Next Challenge button! Navigated to: ${nextResult.nextUrl || 'Next Problem'}`);
-        } else {
-          console.log('ℹ️ No direct Next Challenge button found. Will load next challenge from queue.');
+          // Check if there is an on-page or modal "Next Challenge" button and click it
+          console.log('🔍 Checking for "Next Challenge" button / modal...');
+          const nextResult = await this.runner.clickNextChallenge();
+          if (nextResult.clicked) {
+            console.log(`🚀 Clicked Next Challenge button! Navigated to: ${nextResult.nextUrl || 'Next Problem'}`);
+          } else {
+            console.log('ℹ️ No direct Next Challenge button found. Will load next challenge from queue.');
+          }
+
+          break;
         }
-
-        break;
       } else {
         console.log(`⚠️ [ZERO POINTS / FAILED] Solution failed sample test cases.`);
         if (attempt < MAX_RETRIES) {
