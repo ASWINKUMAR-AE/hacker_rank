@@ -682,11 +682,12 @@ export class PlaywrightHackerRankRunner {
             return { finished: false };
           }
 
-          // Check for compilation error / runtime error
-          const compErrorEl = document.querySelector('.compile-error, .compiler-message, [data-automation="compiler-message"]');
+          // Check for genuine compilation error / runtime error (ignore informational messages like "No sample test-cases")
+          const compErrorEl = document.querySelector('.compile-error, .testcase-error, .error-output, .output-error, [data-automation="compile-error"]');
           if (compErrorEl) {
             const errText = compErrorEl.textContent?.trim() || '';
-            if (errText.length > 0 && !errText.includes('Success')) {
+            const isActualError = /error|traceback|syntaxerror|exception|runtime\s*error|compilation\s*error/i.test(errText);
+            if (isActualError && !errText.includes('No sample test-cases')) {
               return {
                 finished: true,
                 passed: false,
@@ -700,11 +701,13 @@ export class PlaywrightHackerRankRunner {
             }
           }
 
-          // Check for congratulations / all sample cases passed / React Jest test suite passed / submission success
-          const congratsEl = document.querySelector('.congratulations-message, .status-success, .testcase-status--success, .compile-success, [data-automation="compile-success"], .submission-congratulations');
+          // Check for congratulations / all sample cases passed / React Jest test suite passed / submission success / Plain Text accepted
+          const congratsEl = document.querySelector('.congratulations-message, .status-success, .testcase-status--success, .compile-success, [data-automation="compile-success"], .submission-congratulations, .submission-success, [data-automation="submission-success"]');
           const hasCongratsText = !!congratsEl ||
                                  bodyText.includes('Congratulations!') ||
                                  bodyText.includes('Congratulations') ||
+                                 bodyText.includes('Right Answer') ||
+                                 bodyText.includes('Accepted') ||
                                  bodyText.includes('You solved this challenge') ||
                                  bodyText.includes('Would you like to challenge your friends') ||
                                  bodyText.includes('You passed all sample test cases') ||
@@ -713,6 +716,8 @@ export class PlaywrightHackerRankRunner {
                                  bodyText.includes('Test Suites: 1 passed') ||
                                  bodyText.includes('PASS src/') ||
                                  (bodyText.includes('PASS') && bodyText.includes('.test.js')) ||
+                                 (bodyText.includes('Points:') && !bodyText.includes('Points: 0')) ||
+                                 (bodyText.includes('Score:') && !bodyText.includes('Score: 0')) ||
                                  bodyText.includes('Success');
 
           if (hasCongratsText) {
