@@ -1,4 +1,4 @@
-export type ChallengeCategory = 'SQL' | 'React' | 'Linux Shell' | 'JavaScript' | 'Algorithms' | 'General';
+export type ChallengeCategory = 'SQL' | 'Databases' | 'React' | 'Linux Shell' | 'JavaScript' | 'Algorithms' | 'General';
 
 export type DifficultyLevel = 'Easy' | 'Medium' | 'Hard';
 

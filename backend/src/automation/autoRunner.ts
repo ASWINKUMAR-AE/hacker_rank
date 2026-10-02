@@ -35,9 +35,15 @@ export const POPULAR_TOPICS: TrackTopic[] = [
   // JavaScript & React Tutorials
   { name: '10 Days of JavaScript', url: 'https://www.hackerrank.com/domains/tutorials/10-days-of-javascript', category: 'JavaScript' },
   
-  // Algorithms Tracks
+  // Databases Tracks (Relational Algebra & Normalization)
+  { name: 'Databases (All)', url: 'https://www.hackerrank.com/domains/databases', category: 'Databases' },
+  { name: 'Databases: Relational Algebra', url: 'https://www.hackerrank.com/domains/databases?filters%5Bsubdomains%5D%5B%5D=relational-algebra', category: 'Databases' },
+  { name: 'Databases: Database Normalization', url: 'https://www.hackerrank.com/domains/databases?filters%5Bsubdomains%5D%5B%5D=database-normalization', category: 'Databases' },
+
+  // Algorithms & Data Structures Tracks
   { name: 'Algorithms (All)', url: 'https://www.hackerrank.com/domains/algorithms', category: 'Algorithms' },
-  { name: 'Algorithms: Warmup', url: 'https://www.hackerrank.com/domains/algorithms?filters%5Bsubdomains%5D%5B%5D=warmup', category: 'Algorithms' }
+  { name: 'Algorithms: Warmup', url: 'https://www.hackerrank.com/domains/algorithms?filters%5Bsubdomains%5D%5B%5D=warmup', category: 'Algorithms' },
+  { name: 'Data Structures (All)', url: 'https://www.hackerrank.com/domains/data-structures', category: 'Algorithms' }
 ];
 
 export class HackerRankAutoRunner {

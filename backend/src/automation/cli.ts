@@ -28,6 +28,11 @@ function parseDomainChoice(raw: string): string {
     case 'algorithms':
       return 'Algorithms';
     case '6':
+    case 'databases':
+    case 'database':
+    case 'relational-algebra':
+      return 'Databases';
+    case '7':
     case 'all':
       return 'All';
     case '1':
@@ -64,7 +69,8 @@ async function promptDomainSelection(): Promise<string> {
   console.log(' [3] Linux Shell (Bash, Text Processing, Grep, Sed, Awk)');
   console.log(' [4] JavaScript (10 Days of JavaScript)');
   console.log(' [5] Algorithms (Problem Solving)');
-  console.log(' [6] All Domains (Full Multi-Track Crawl)');
+  console.log(' [6] Databases (Relational Algebra, Sets & Relations, Normalization)');
+  console.log(' [7] All Domains (Full Multi-Track Crawl)');
   console.log('=====================================================');
 
   const rl = readline.createInterface({
@@ -73,7 +79,7 @@ async function promptDomainSelection(): Promise<string> {
   });
 
   return new Promise((resolve) => {
-    rl.question('👉 Enter choice [1-6] (Default: 1 - SQL): ', (answer) => {
+    rl.question('👉 Enter choice [1-7] (Default: 1 - SQL): ', (answer) => {
       try { rl.close(); } catch {}
       const cleaned = answer ? answer.trim() : '';
       const selected = parseDomainChoice(cleaned || '1');

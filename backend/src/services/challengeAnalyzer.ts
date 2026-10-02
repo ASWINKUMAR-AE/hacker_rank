@@ -1,5 +1,6 @@
 import { ProblemPayload, AnalysisResult, ChallengeCategory, DifficultyLevel, SampleTestCase } from '../types';
 import { SQLSolver } from './sqlSolver';
+import { DatabaseSolver } from './databaseSolver';
 import { ReactSolver } from './reactSolver';
 import { ShellSolver } from './shellSolver';
 import { AlgorithmSolver } from './algorithmSolver';
@@ -9,6 +10,7 @@ import { buildSystemPrompt, buildUserPrompt } from '../ai/prompts';
 
 export class ChallengeAnalyzer {
   private sqlSolver: SQLSolver;
+  private databaseSolver: DatabaseSolver;
   private reactSolver: ReactSolver;
   private shellSolver: ShellSolver;
   private algorithmSolver: AlgorithmSolver;
@@ -16,6 +18,7 @@ export class ChallengeAnalyzer {
 
   constructor() {
     this.sqlSolver = new SQLSolver();
+    this.databaseSolver = new DatabaseSolver();
     this.reactSolver = new ReactSolver();
     this.shellSolver = new ShellSolver();
     this.algorithmSolver = new AlgorithmSolver();
@@ -34,6 +37,9 @@ export class ChallengeAnalyzer {
     const lang = (problem.selectedLanguage || '').toLowerCase();
 
     // 1. URL & Breadcrumb check (highest confidence)
+    if (url.includes('/domains/databases') || url.includes('/relational-algebra') || url.includes('/database-normalization') || url.includes('basics-of-sets-and-relations')) {
+      return 'Databases';
+    }
     if (url.includes('/react') || url.includes('react') || title.includes('react')) {
       return 'React';
     }
@@ -43,11 +49,14 @@ export class ChallengeAnalyzer {
     if (url.includes('/domains/shell') || url.includes('/linux-shell') || url.includes('/bash-') || url.includes('/shell/')) {
       return 'Linux Shell';
     }
-    if (url.includes('/domains/algorithms') || url.includes('/algorithms/') || url.includes('compare-the-triplets')) {
+    if (url.includes('/domains/algorithms') || url.includes('/algorithms/') || url.includes('compare-the-triplets') || url.includes('/domains/data-structures')) {
       return 'Algorithms';
     }
 
     // 2. Problem text keywords check
+    if (text.includes('relational algebra') || text.includes('sets and relations') || text.includes('functional dependencies') || (text.includes('set a =') && text.includes('set b ='))) {
+      return 'Databases';
+    }
     if (text.includes('component') || text.includes('usestate') || text.includes('useeffect') || text.includes('jsx') || text.includes('props') || text.includes('data-testid') || text.includes('h8k-')) {
       return 'React';
     }
@@ -59,6 +68,9 @@ export class ChallengeAnalyzer {
     }
 
     // 3. Language check
+    if (lang.includes('plain text') && (text.includes('set') || text.includes('relation') || text.includes('database') || text.includes('integer'))) {
+      return 'Databases';
+    }
     if (lang.includes('sql') || lang.includes('mysql') || lang.includes('oracle') || lang.includes('db2')) {
       return 'SQL';
     }
@@ -88,6 +100,8 @@ export class ChallengeAnalyzer {
     if (category === 'SQL') {
       schemaInfo = this.sqlSolver.extractSchema(problem.statement);
       highConfidenceCode = this.sqlSolver.findHighConfidenceSolution(problem.url || problem.title, problem.statement, problem.selectedLanguage);
+    } else if (category === 'Databases') {
+      highConfidenceCode = this.databaseSolver.findHighConfidenceSolution(problem.url || problem.title, problem.statement);
     } else if (category === 'React') {
       reactInfo = this.reactSolver.analyzeReactCode(problem.existingCode || problem.statement);
       highConfidenceCode = this.reactSolver.findHighConfidenceSolution(problem.url || problem.title, problem.statement, problem.existingCode);
