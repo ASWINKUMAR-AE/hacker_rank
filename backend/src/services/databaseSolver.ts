@@ -10,18 +10,22 @@ export class DatabaseSolver {
 
     // 1. Basics of Sets and Relations #1: A = {1,2,3,4,5,6}, B = {2,3,4,5,6,7,8} -> A U B
     if (
-      slug.includes('basics-of-sets-and-relations-1') ||
-      slug.includes('basics-of-sets-and-relations-01') ||
+      slug.includes('sets-and-relations-1') ||
+      slug.includes('sets-and-relations-01') ||
+      slug.includes('relational-algebra-1') ||
+      slug.includes('relational-algebra-01') ||
       (lower.includes('sets and relations') && (lower.includes('#1') || lower.includes(' 1'))) ||
-      (lower.includes('a u b') || lower.includes('a union b') || (lower.includes('1,2,3,4,5,6') && lower.includes('2,3,4,5,6,7,8') && lower.includes('union')))
+      (lower.includes('a u b') || lower.includes('a union b') || (lower.includes('1,2,3,4,5,6') && lower.includes('2,3,4,5,6,7,8') && (lower.includes('union') || !lower.includes('intersection'))))
     ) {
       return '8';
     }
 
     // 2. Basics of Sets and Relations #2: A = {1,2,3,4,5,6}, B = {2,3,4,5,6,7,8} -> A ∩ B
     if (
-      slug.includes('basics-of-sets-and-relations-2') ||
-      slug.includes('basics-of-sets-and-relations-02') ||
+      slug.includes('sets-and-relations-2') ||
+      slug.includes('sets-and-relations-02') ||
+      slug.includes('relational-algebra-2') ||
+      slug.includes('relational-algebra-02') ||
       (lower.includes('sets and relations') && (lower.includes('#2') || lower.includes(' 2'))) ||
       (lower.includes('a ∩ b') || lower.includes('a intersection b') || (lower.includes('1,2,3,4,5,6') && lower.includes('2,3,4,5,6,7,8') && lower.includes('intersection')))
     ) {
@@ -30,8 +34,10 @@ export class DatabaseSolver {
 
     // 3. Basics of Sets and Relations #3: A = {1,2,3,4,5,6}, B = {2,3,4,5,6,7,8} -> A - B
     if (
-      slug.includes('basics-of-sets-and-relations-3') ||
-      slug.includes('basics-of-sets-and-relations-03') ||
+      slug.includes('sets-and-relations-3') ||
+      slug.includes('sets-and-relations-03') ||
+      slug.includes('relational-algebra-3') ||
+      slug.includes('relational-algebra-03') ||
       (lower.includes('sets and relations') && (lower.includes('#3') || lower.includes(' 3'))) ||
       (lower.includes('a - b') || (lower.includes('1,2,3,4,5,6') && lower.includes('2,3,4,5,6,7,8') && lower.includes('a - b')))
     ) {
@@ -40,8 +46,10 @@ export class DatabaseSolver {
 
     // 4. Basics of Sets and Relations #4: A = {1,2,3,4,5,6}, B = {2,3,4,5,6,7,8} -> B - A
     if (
-      slug.includes('basics-of-sets-and-relations-4') ||
-      slug.includes('basics-of-sets-and-relations-04') ||
+      slug.includes('sets-and-relations-4') ||
+      slug.includes('sets-and-relations-04') ||
+      slug.includes('relational-algebra-4') ||
+      slug.includes('relational-algebra-04') ||
       (lower.includes('sets and relations') && (lower.includes('#4') || lower.includes(' 4'))) ||
       (lower.includes('b - a') || (lower.includes('1,2,3,4,5,6') && lower.includes('2,3,4,5,6,7,8') && lower.includes('b - a')))
     ) {
@@ -50,8 +58,10 @@ export class DatabaseSolver {
 
     // 5. Basics of Sets and Relations #5: A = {1,2,3,4,5,6}, B = {2,3,4,5,6,7,8} -> A x B Cartesian Product
     if (
-      slug.includes('basics-of-sets-and-relations-5') ||
-      slug.includes('basics-of-sets-and-relations-05') ||
+      slug.includes('sets-and-relations-5') ||
+      slug.includes('sets-and-relations-05') ||
+      slug.includes('relational-algebra-5') ||
+      slug.includes('relational-algebra-05') ||
       (lower.includes('sets and relations') && (lower.includes('#5') || lower.includes(' 5'))) ||
       (lower.includes('cartesian product') || lower.includes('a x b') || lower.includes('a × b'))
     ) {
