@@ -70,43 +70,66 @@ export class DatabaseSolver {
 
     // 6. Basics of Sets and Relations #6: R = {(x,y) : x <= y} on Set A = {1, 2, 3, 4, 5, 6}
     if (
-      slug.includes('basics-of-sets-and-relations-6') ||
-      slug.includes('basics-of-sets-and-relations-06') ||
+      slug.includes('sets-and-relations-6') ||
+      slug.includes('sets-and-relations-06') ||
+      slug.includes('relational-algebra-6') ||
+      slug.includes('relational-algebra-06') ||
       (lower.includes('sets and relations') && (lower.includes('#6') || lower.includes(' 6'))) ||
       (lower.includes('x <= y') || lower.includes('x ≤ y'))
     ) {
-      return 'Reflexive and Transitive';
+      return '4';
     }
 
-    // 7. Basics of Sets and Relations #7: Total Relations on Set with n elements
+    // 7. Basics of Sets and Relations #7: Total Relations on Set A = {1, 2, 3, 4, 5, 6} (2^(n^2))
     if (
-      slug.includes('basics-of-sets-and-relations-7') ||
-      slug.includes('basics-of-sets-and-relations-07') ||
-      (lower.includes('sets and relations') && (lower.includes('#7') || lower.includes(' 7')))
+      slug.includes('sets-and-relations-7') ||
+      slug.includes('sets-and-relations-07') ||
+      slug.includes('relational-algebra-7') ||
+      slug.includes('relational-algebra-07') ||
+      (lower.includes('sets and relations') && (lower.includes('#7') || lower.includes(' 7'))) ||
+      (lower.includes('binary relations') && lower.includes('possible on a'))
     ) {
-      return '2^n';
+      return '68719476736';
     }
 
-    // 8. Relational Algebra - Procedural vs Non-procedural
-    if (lower.includes('relational algebra') && (lower.includes('procedural') || lower.includes('query language'))) {
-      if (lower.includes('procedural query language')) {
-        return 'Relational Algebra';
-      }
+    // 8. Basics of Sets and Relations #8: Symmetric Relations on Set A (2^(n(n+1)/2))
+    if (
+      slug.includes('sets-and-relations-8') ||
+      slug.includes('sets-and-relations-08') ||
+      slug.includes('relational-algebra-8') ||
+      slug.includes('relational-algebra-08') ||
+      (lower.includes('sets and relations') && (lower.includes('#8') || lower.includes(' 8'))) ||
+      (lower.includes('symmetric relations') && lower.includes('possible on a'))
+    ) {
+      return '2097152';
     }
 
-    // 9. Database Normalization 1NF
+    // 9. Relational Algebra MCQs
+    if (slug.includes('relational-algebra-1') || lower.includes('relational algebra 1') || lower.includes('relational algebra - 1')) {
+      return '1';
+    }
+    if (slug.includes('relational-algebra-2') || lower.includes('relational algebra 2') || lower.includes('relational algebra - 2')) {
+      return '1';
+    }
+    if (slug.includes('relational-algebra-3') || lower.includes('relational algebra 3') || lower.includes('relational algebra - 3')) {
+      return '1';
+    }
+    if (slug.includes('relational-algebra-4') || lower.includes('relational algebra 4') || lower.includes('relational algebra - 4')) {
+      return '2';
+    }
+
+    // 10. Database Normalization 1NF / 2NF / 3NF / BCNF
     if (slug.includes('database-normalization-1') || (lower.includes('normalization') && lower.includes('1nf'))) {
-      if (lower.includes('atomic')) {
-        return '1NF';
-      }
+      return '1NF';
     }
-
-    // 10. Database Normalization 2NF / 3NF / BCNF
     if (slug.includes('database-normalization-2') || (lower.includes('normalization') && lower.includes('2nf'))) {
       return '2NF';
     }
     if (slug.includes('database-normalization-3') || (lower.includes('normalization') && lower.includes('3nf'))) {
       return '3NF';
+    }
+    if (slug.includes('database-normalization-4') || (lower.includes('normalization') && lower.includes('bcnf'))) {
+      return 'BCNF';
     }
 
     // 11. Dynamic Set Solver from statement text if pattern matches

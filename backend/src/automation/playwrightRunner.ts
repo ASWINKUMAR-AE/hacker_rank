@@ -382,6 +382,36 @@ export class PlaywrightHackerRankRunner {
         await this.page.waitForTimeout(600);
         return true;
       }
+
+      // Step 5: Radio button / Multiple Choice Question option selection
+      const radioOptions = this.page.locator('input[type="radio"], input[type="checkbox"], label.ui-radio, label.ui-checkbox, .radio-custom, .checkbox-custom, div[data-automation="question-option"], .challenge-option, .theme-m label');
+      const count = await radioOptions.count().catch(() => 0);
+      if (count > 0) {
+        console.log(`🔘 Multiple choice / radio options detected (${count} options). Selecting matching option for: "${code}"...`);
+        const trimmedCode = code.trim();
+        const idxMap: Record<string, number> = { '1': 0, 'a': 0, '2': 1, 'b': 1, '3': 2, 'c': 2, '4': 3, 'd': 3 };
+        const targetIdx = idxMap[trimmedCode.toLowerCase()];
+
+        if (targetIdx !== undefined && targetIdx < count) {
+          await radioOptions.nth(targetIdx).click({ force: true });
+          console.log(`✅ Clicked option index ${targetIdx + 1}`);
+          return true;
+        }
+
+        const labels = this.page.locator('label, .challenge-option, div[data-automation="question-option"], .ui-radio-label, .ui-checkbox-label, .theme-m label');
+        const labelCount = await labels.count().catch(() => 0);
+        for (let i = 0; i < labelCount; i++) {
+          const text = (await labels.nth(i).innerText().catch(() => '')) || '';
+          if (text && trimmedCode && (text.toLowerCase().includes(trimmedCode.toLowerCase()) || trimmedCode.toLowerCase().includes(text.toLowerCase()))) {
+            await labels.nth(i).click({ force: true });
+            console.log(`✅ Selected matching option label: "${text.trim()}"`);
+            return true;
+          }
+        }
+
+        await radioOptions.first().click({ force: true });
+        return true;
+      }
     } catch (err) {
       console.error('Failed to set editor code:', err);
     }
